@@ -21,6 +21,27 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
+app.MapGet("api/cars", () =>
+{
+    var car1 = new Car
+    {
+        TeamName = "Team A"
+    };
+
+    var car2 = new Car
+    {
+        TeamName = "Team B"
+    };
+
+    var cars = new List<Car>
+    {
+        car1, car2
+    };
+
+    return cars;
+})
+    .WithName("Minimal API - GetCars");
+
 app.MapGet("/weatherforecast", () =>
 {
     var forecast = Enumerable.Range(1, 5).Select(index =>
@@ -40,4 +61,16 @@ app.Run();
 internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+}
+
+public record Car
+{
+    public int Id { get; set; }
+    public string TeamName { get; set; }
+    public int Speed { get; set; }
+    public double MelfunctionChance { get; set; }
+    public int MelfunctionsOccured { get; set; }
+    public int DistanceCoveredInMiles { get; set; }
+    public bool FinishedRace { get; set; }
+    public int RacedForHours { get; set; }
 }
