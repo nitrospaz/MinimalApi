@@ -16,10 +16,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// In memory example
+
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
+
+// Cars endpoints
 
 app.MapGet("api/cars", () =>
 {
@@ -39,8 +43,39 @@ app.MapGet("api/cars", () =>
     };
 
     return cars;
-})
-    .WithName("Minimal API - GetCars");
+}).WithName("GetCars");
+
+app.MapGet("api/cars/{id}",
+    (int id) => 
+    {
+        var car1 = new Car
+        {
+            TeamName = "Team A"
+        };
+        return car1;
+    }).WithName("GetCar");
+
+app.MapPost("api/cars",
+    (Car car) =>
+    {
+        return car;
+    }).WithName("CreateCar");
+
+app.MapPut("api/cars/{id}",
+    (Car car) =>
+    {
+        return car;
+    }).WithName("UpdateCar");
+
+app.MapDelete("api/cars/{id}",
+    (int id) => 
+    {
+        return $"Car with id: {id} was successfully deleted.";
+    }).WithName("DeleteCar");
+
+// Motorbikes endpoints
+
+// Default endpoint
 
 app.MapGet("/weatherforecast", () =>
 {
@@ -57,6 +92,8 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast");
 
 app.Run();
+
+// Models
 
 internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
 {
